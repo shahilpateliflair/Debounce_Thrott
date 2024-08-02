@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debouncing</title>
+    <style>
+      body {
+        height: 500vh;
+      }
+      section {
+        position: fixed;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+
+  <body onscroll="showCount()">
+    <h1 style="position: fixed">Debouncing Vs Throttling</h1>
+    <section>
+      <h3 class="normal_count">Normal Count</h3>
+      <h3 class="debounce_count">Debounce Count</h3>
+      <h3 class="thrott_count">Thrott Count</h3>
+    </section>
+  </body>
+  <script>
+    const n_cnt = document.querySelector(".normal_count");
+    const d_cnt = document.querySelector(".debounce_count");
+    const t_cnt = document.querySelector(".thrott_count");
+
+    let normalCount = 0;
+
+    let throttCount = 0;
+
+    let debounceCount = 0;
+
+    let isScrolling = true;
+
+    const normal_f = () => {
+      normalCount++;
+      n_cnt.innerHTML = `Normal count : ${normalCount}`;
+    };
+
+    let interval;
+    const debounce_f = () => {
+        clearTimeout(interval)
+      interval = setTimeout(() => {
+        debounceCount++;
+        d_cnt.innerHTML = `Normal count : ${debounceCount}`;
+      }, 1000);
+    };
+
+    const thrott_f = () => {
+      if (isScrolling === true) {
+        throttCount++;
+        t_cnt.innerHTML = `throttal count : ${throttCount}`;
+        isScrolling = false;
+
+        setTimeout(() => {
+          isScrolling = true;
+        }, 1000);
+      }
+    };
+
+    const showCount = () => {
+      normal_f();
+      debounce_f();
+      thrott_f();
+    };
+  </script>
+</html>
